@@ -52,7 +52,5 @@ Write-Host "`n设置完成！" -ForegroundColor Green
 Write-Host "- AGENTS.md 和 CLAUDE.md 指向同一份项目规范(符号链接)" -ForegroundColor Cyan
 Write-Host "- .claude/skills 和 .codex/skills 都使用符号链接指向 .agents\skills" -ForegroundColor Cyan
 Write-Host "`n最终请确认:" -ForegroundColor Cyan
-Get-Item "AGENTS.md" | Format-List Name, LinkType, Target
-Get-Item ".claude\skills" | Format-List Name, LinkType, Target
-Get-Item ".codex\skills" | Format-List Name, LinkType, Target
+Get-Item "AGENTS.md",".claude\skills", ".codex\skills" | Format-Table Name, LinkType, Target
 
