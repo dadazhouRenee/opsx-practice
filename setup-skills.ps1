@@ -33,7 +33,7 @@ if (Test-Path ".claude\skills") {
     }
 } else {
     # 使用相对路径创建目录符号链接
-    cmd /c "cd .claude && mklink /D skills ..\\.agents\\skills" | Out-Null
+    cmd /c "cd .claude && mklink /D skills ..\.agents\skills" | Out-Null
     Write-Host "✓ 创建 .claude\skills -> ..\.agents\skills (相对路径)" -ForegroundColor Green
 }
 
@@ -47,7 +47,7 @@ if (Test-Path ".codex\skills") {
     }
 } else {
     # 使用相对路径创建目录符号链接
-    cmd /c "cd .codex && mklink /D skills ..\\.agents\\skills" | Out-Null
+    cmd /c "cd .codex && mklink /D skills ..\.agents\skills" | Out-Null
     Write-Host "✓ 创建 .codex\skills -> ..\.agents\skills (相对路径)" -ForegroundColor Green
 }
 Write-Host "`n注意: 创建符号链接需要管理员权限或开发者模式" -ForegroundColor Yellow
