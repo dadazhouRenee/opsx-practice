@@ -18,8 +18,9 @@ if (Test-Path "AGENTS.md") {
         Write-Host "警告: AGENTS.md 已存在但不是符号链接，请手动处理" -ForegroundColor Yellow
     }
 } else {
-    New-Item -ItemType SymbolicLink -Path "AGENTS.md" -Target "CLAUDE.md" | Out-Null
-    Write-Host "✓ 创建 AGENTS.md -> CLAUDE.md" -ForegroundColor Green
+    # 使用相对路径创建符号链接
+    cmd /c "mklink AGENTS.md CLAUDE.md" | Out-Null
+    Write-Host "✓ 创建 AGENTS.md -> CLAUDE.md (相对路径)" -ForegroundColor Green
 }
 
 # 2. 创建 .claude/skills 符号链接
@@ -31,8 +32,9 @@ if (Test-Path ".claude\skills") {
         Write-Host "警告: .claude\skills 已存在但不是符号链接，请手动处理" -ForegroundColor Yellow
     }
 } else {
-    New-Item -ItemType SymbolicLink -Path ".claude\skills" -Target ".agents\skills" | Out-Null
-    Write-Host "✓ 创建 .claude\skills -> .agents\skills" -ForegroundColor Green
+    # 使用相对路径创建目录符号链接
+    cmd /c "cd .claude && mklink /D skills ..\\.agents\\skills" | Out-Null
+    Write-Host "✓ 创建 .claude\skills -> ..\.agents\skills (相对路径)" -ForegroundColor Green
 }
 
 # 3. 创建 .codex/skills 符号链接
@@ -44,8 +46,9 @@ if (Test-Path ".codex\skills") {
         Write-Host "警告: .codex\skills 已存在但不是符号链接，请手动处理" -ForegroundColor Yellow
     }
 } else {
-    New-Item -ItemType SymbolicLink -Path ".codex\skills" -Target ".agents\skills" | Out-Null
-    Write-Host "✓ 创建 .codex\skills -> .agents\skills" -ForegroundColor Green
+    # 使用相对路径创建目录符号链接
+    cmd /c "cd .codex && mklink /D skills ..\\.agents\\skills" | Out-Null
+    Write-Host "✓ 创建 .codex\skills -> ..\.agents\skills (相对路径)" -ForegroundColor Green
 }
 Write-Host "`n注意: 创建符号链接需要管理员权限或开发者模式" -ForegroundColor Yellow
 Write-Host "`n设置完成！" -ForegroundColor Green

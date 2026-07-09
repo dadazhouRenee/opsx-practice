@@ -1,1 +1,1 @@
-D:/selfWork/demo-opsx-01/CLAUDE.md
+CLAUDE.md
