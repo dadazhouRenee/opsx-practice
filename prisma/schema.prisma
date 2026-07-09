@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// NextAuth.js 所需的模型
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// 用户模型
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts    Account[]
+  sessions    Session[]
+  permissions UserPermission[]
+}
+
+// 权限模型
+model Permission {
+  id          String   @id @default(cuid())
+  code        String   @unique // 格式：resource:action，如 user:create
+  description String?
+  createdAt   DateTime @default(now())
+
+  users UserPermission[]
+}
+
+// 用户-权限关联表
+model UserPermission {
+  id           String   @id @default(cuid())
+  userId       String
+  permissionId String
+  createdAt    DateTime @default(now())
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, permissionId])
+}
+
+// 物料模型
+model Item {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workOrders WorkOrder[]
+}
+
+// 工单模型
+model WorkOrder {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  itemId      String
+  quantity    Int
+  status      String   @default("pending") // pending, in_progress, completed
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  item    Item              @relation(fields: [itemId], references: [id])
+  reports ProductionReport[]
+}
+
+// 生产报工模型
+model ProductionReport {
+  id          String   @id @default(cuid())
+  workOrderId String
+  quantity    Int
+  operatorId  String
+  reportedAt  DateTime @default(now())
+
+  workOrder WorkOrder @relation(fields: [workOrderId], references: [id], onDelete: Cascade)
+}
