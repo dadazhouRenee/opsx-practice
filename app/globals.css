@@ -68,6 +68,16 @@
     --primary: 25 95% 53%;
     --primary-foreground: 0 0% 100%;
   }
+
+  [data-theme="cyan"] {
+    --primary: 189 94% 43%;
+    --primary-foreground: 0 0% 100%;
+  }
+
+  [data-theme="indigo"] {
+    --primary: 239 84% 67%;
+    --primary-foreground: 0 0% 100%;
+  }
 }
 
 @layer base {

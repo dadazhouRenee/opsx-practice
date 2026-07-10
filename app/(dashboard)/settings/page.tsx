@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ThemeSwitcher } from '@/components/theme-switcher';
-import { Info, AlertTriangle } from 'lucide-react';
+import { Info, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 export default function SettingsPage() {
   return (
@@ -79,6 +79,13 @@ export default function SettingsPage() {
                 <AlertTitle>警告提示</AlertTitle>
                 <AlertDescription>
                   这是一个警告类型的提示消息，用于展示需要注意的内容。
+                </AlertDescription>
+              </Alert>
+              <Alert className="bg-primary/10 border-primary text-primary">
+                <CheckCircle2 className="h-4 w-4" />
+                <AlertTitle>成功提示</AlertTitle>
+                <AlertDescription>
+                  这是一个主色调的提示消息，随主题颜色变化而变化。
                 </AlertDescription>
               </Alert>
             </div>

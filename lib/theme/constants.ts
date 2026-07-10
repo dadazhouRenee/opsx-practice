@@ -1,6 +1,6 @@
 import { ColorTheme } from './types';
 
-export const THEME_COLORS: ColorTheme[] = ['blue', 'green', 'purple', 'orange'];
+export const THEME_COLORS: ColorTheme[] = ['blue', 'green', 'purple', 'orange', 'cyan', 'indigo'];
 
 export const THEME_COLORS_CONFIG = {
   blue: {
@@ -21,6 +21,16 @@ export const THEME_COLORS_CONFIG = {
   orange: {
     name: '橙色',
     primary: '25 95% 53%',
+    primaryForeground: '0 0% 100%',
+  },
+  cyan: {
+    name: '青色',
+    primary: '189 94% 43%',
+    primaryForeground: '0 0% 100%',
+  },
+  indigo: {
+    name: '靛蓝',
+    primary: '239 84% 67%',
     primaryForeground: '0 0% 100%',
   },
 } as const;

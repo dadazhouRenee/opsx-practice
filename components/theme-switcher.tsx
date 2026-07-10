@@ -39,7 +39,7 @@ export function ThemeSwitcher() {
       {/* 主题颜色选择器 */}
       <div className="space-y-3">
         <Label>主题颜色</Label>
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-3 gap-6">
           {THEME_COLORS.map((themeColor) => {
             const config = THEME_COLORS_CONFIG[themeColor];
             const isSelected = color === themeColor;
