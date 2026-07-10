@@ -8,7 +8,7 @@
 
 **Goals:**
 - 实现明暗主题切换，支持浅色和深色两种模式
-- 实现主色调选择器，提供 4 种颜色（蓝、绿、紫、橙）
+- 实现主色调选择器，提供 6 种颜色（蓝、绿、紫、橙、青、靛蓝）
 - 构建 Dashboard 布局系统（Header + Sidebar + Main）
 - 创建 `/settings` 页面展示主题配置和组件预览
 - localStorage 持久化用户主题偏好
@@ -16,7 +16,7 @@
 
 **Non-Goals:**
 - 不支持"跟随系统"主题模式（仅 Light/Dark 两选项）
-- 不支持用户自定义颜色（仅预设的 4 种）
+- 不支持用户自定义颜色（仅预设的 6 种）
 - 不实现主题的服务端存储（无需数据库，localStorage 即可）
 - 不构建复杂的 Sidebar 折叠/展开逻辑（固定宽度即可）
 - 不实现主题动画过渡效果（MVP 阶段保持简单）
@@ -69,10 +69,12 @@
 .dark { --background: black; --foreground: white; ... }
 
 /* 主色调：通过 data-theme 属性 */
-[data-theme="blue"]   { --primary: 217 91% 60%; --primary-foreground: 0 0% 100%; }
-[data-theme="green"]  { --primary: 142 71% 45%; --primary-foreground: 0 0% 100%; }
-[data-theme="purple"] { --primary: 262 83% 58%; --primary-foreground: 0 0% 100%; }
-[data-theme="orange"] { --primary: 25 95% 53%;  --primary-foreground: 0 0% 100%; }
+[data-theme="blue"]    { --primary: 217 91% 60%; --primary-foreground: 0 0% 100%; }
+[data-theme="green"]   { --primary: 142 71% 45%; --primary-foreground: 0 0% 100%; }
+[data-theme="purple"]  { --primary: 262 83% 58%; --primary-foreground: 0 0% 100%; }
+[data-theme="orange"]  { --primary: 25 95% 53%;  --primary-foreground: 0 0% 100%; }
+[data-theme="cyan"]    { --primary: 189 94% 43%; --primary-foreground: 0 0% 100%; }
+[data-theme="indigo"]  { --primary: 239 84% 67%; --primary-foreground: 0 0% 100%; }
 ```
 
 **理由**：
@@ -81,7 +83,7 @@
 - ✅ 统一感：所有主题的中性色保持一致，只有强调色变化
 
 **替代方案**：
-- ❌ 每个主题定义完整变量集：会产生 4×16=64 个变量定义，维护成本高
+- ❌ 每个主题定义完整变量集：会产生 6×16=96 个变量定义，维护成本高
 
 ### 4. 布局系统：Dashboard Layout Pattern
 
@@ -194,7 +196,7 @@ npx shadcn-ui@latest add button card select alert label
 // localStorage 键值对
 {
   "theme": "dark",              // next-themes 管理（"light" | "dark"）
-  "color-theme": "green"        // ColorThemeProvider 管理（"blue" | "green" | "purple" | "orange"）
+  "color-theme": "green"        // ColorThemeProvider 管理（"blue" | "green" | "purple" | "orange" | "cyan" | "indigo"）
 }
 ```
 
@@ -213,7 +215,7 @@ npx shadcn-ui@latest add button card select alert label
 
 ```typescript
 // lib/theme/color-theme-provider.tsx
-export type ColorTheme = 'blue' | 'green' | 'purple' | 'orange';
+export type ColorTheme = 'blue' | 'green' | 'purple' | 'orange' | 'cyan' | 'indigo';
 
 interface ColorThemeContextValue {
   color: ColorTheme;
@@ -255,11 +257,11 @@ app/(dashboard)/settings/page.tsx
     ├── Card (主题配置)
     │   └── ThemeSwitcher
     │       ├── 明暗模式选择器
-    │       └── 主色调选择器
+    │       └── 主色调选择器（3×2 网格布局）
     └── Card (组件预览)
         ├── Button 预览
         ├── Select 预览
-        ├── Alert 预览
+        ├── Alert 预览（3 种：信息、警告、主色）
         └── Card 预览
 ```
 
@@ -276,10 +278,11 @@ app/(dashboard)/settings/page.tsx
 2. **更新代码**：按任务清单顺序实施（见 `tasks.md`）
 
 3. **验证**：
-   - 访问 `/settings` 页面，测试 4 种颜色 × 2 种模式 = 8 种组合
+   - 访问 `/settings` 页面，测试 6 种颜色 × 2 种模式 = 12 种组合
    - 刷新页面，验证主题持久化
    - 测试 Header 的明暗快捷切换
    - 验证 Sidebar 导航正常工作
+   - 验证主色 Alert 在不同主题下显示正确的颜色
 
 4. **Rollback 策略**：
    - Git revert 所有相关 commits
