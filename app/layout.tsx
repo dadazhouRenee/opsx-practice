@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeProvider } from "next-themes";
+import { ColorThemeProvider } from "@/lib/theme";
 
 export const metadata: Metadata = {
   title: "MES 管理系统",
@@ -12,8 +14,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN">
-      <body>{children}</body>
+    <html lang="zh-CN" suppressHydrationWarning>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          disableTransitionOnChange
+        >
+          <ColorThemeProvider>
+            {children}
+          </ColorThemeProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
