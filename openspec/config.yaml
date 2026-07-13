@@ -1,24 +1,33 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
-
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
 context: |
-  语言：中文（简体）
-  所有产出物（提案、规格、设计、任务）必须用简体中文撰写。
-  技术术语可以保留英文原文，但说明应使用中文。
+  语言：所有产出物（提案、规格、设计、任务）必须用简体中文撰写。
+  技术术语可保留英文，但说明用中文。
+
+  项目技术栈和开发规范详见 CLAUDE.md，这里仅强调 OpenSpec 工作流要求：
+  - 提案/设计/规格必须针对本项目的 Feature-based 架构
+  - 任务拆分需考虑 Prisma → Server Actions → UI 组件的依赖顺序
+  - 权限点格式严格遵循"资源:动作"
+
+rules:
+  proposal:
+    - 提案必须包含"问题陈述"和"核心价值"
+    - 明确列出"MVP 范围"和"不包含内容"
+    - 提案控制在 300 字以内
+
+  design:
+    - 必须包含数据模型设计（Prisma Schema 格式）
+    - 必须包含权限点定义（资源:动作格式）
+    - API 设计必须明确 Server Actions 的签名和返回格式
+    - UI 设计需指明使用的 shadcn/ui 组件
+
+  spec:
+    - 功能规格必须包含"前置条件"和"预期结果"
+    - API 规格必须定义 Zod Schema
+    - 明确标注需要的权限点
+
+  tasks:
+    - 任务拆分：每个任务 ≤ 2 小时
+    - 任务顺序：优先 Prisma Schema → Server Actions → UI 组件
+    - 每个任务明确输出物（文件路径 + 核心代码片段）
+    - 数据库变更任务必须包含 migration 命令
