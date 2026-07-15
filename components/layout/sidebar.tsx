@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Settings } from 'lucide-react';
+import { Home, Settings, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const menuItems = [
   { icon: Home, label: '首页', href: '/' },
+  { icon: Users, label: '用户管理', href: '/users' },
   { icon: Settings, label: '设置', href: '/settings' },
 ];
 

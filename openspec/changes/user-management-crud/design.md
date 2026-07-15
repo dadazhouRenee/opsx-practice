@@ -230,6 +230,41 @@ npx prisma migrate dev --name add_username_and_soft_delete
 - auth.ts 改动可直接 git revert
 - UI 部分为纯新增，移除路由即可
 
+## Testing
+
+**自动化测试脚本：** `scripts/test-user-management.ts`
+
+**运行方式：**
+```bash
+npm run test:user-management
+```
+
+**测试覆盖：**
+- ✅ 创建用户和 username 唯一性校验
+- ✅ 分页查询（验证第 1 页和第 2 页）
+- ✅ 搜索功能（三字段模糊匹配）
+- ✅ 更新用户信息（username 不可修改）
+- ✅ 重置密码（验证 bcrypt hash 和密码匹配）
+- ✅ 软删除（设置 deletedAt）
+- ✅ 软删除用户不出现在列表
+- ✅ 软删除用户无法登录
+
+**安全保护：**
+- 脚本包含环境检查，禁止在生产环境运行
+- 检查 `NODE_ENV === 'production'` 自动拒绝执行
+- 检查 `DATABASE_URL` 是否包含 "prod" 或 "production" 关键字
+- 所有测试数据使用 `test_` 前缀，便于识别和清理
+
+**数据清理：**
+- 测试开始前自动清理以 `test_` 开头的用户
+- 测试数据不会污染实际用户数据
+- 使用独立的测试用户池，不影响开发调试
+
+**UI 测试（手动）：**
+- 访问 http://localhost:3000/users 验证页面渲染
+- 测试 Dialog 交互和表单校验
+- 验证搜索、分页的响应性和加载状态
+
 ## Open Questions
 
 暂无。所有设计决策已在探索阶段与用户确认。

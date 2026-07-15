@@ -81,7 +81,7 @@ export default function SettingsPage() {
                   这是一个警告类型的提示消息，用于展示需要注意的内容。
                 </AlertDescription>
               </Alert>
-              <Alert className="bg-primary/10 border-primary text-primary">
+              <Alert className="bg-primary/10 border-primary text-primary [&>svg]:text-primary">
                 <CheckCircle2 className="h-4 w-4" />
                 <AlertTitle>成功提示</AlertTitle>
                 <AlertDescription>
@@ -94,13 +94,13 @@ export default function SettingsPage() {
           {/* Card 预览 */}
           <div className="space-y-3">
             <Label>卡片样式</Label>
-            <Card>
+            <Card className="bg-primary/5 border-primary">
               <CardHeader>
                 <CardTitle>示例卡片</CardTitle>
-                <CardDescription>这是一个示例卡片，展示当前主题的卡片样式</CardDescription>
+                <CardDescription className="text-muted-foreground">这是一个示例卡片，展示当前主题的卡片样式</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-primary/60">
                   卡片内容区域，可以包含任何类型的内容。当前主题会影响卡片的背景色、边框和文字颜色。
                 </p>
               </CardContent>
